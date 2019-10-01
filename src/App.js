@@ -6,6 +6,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
+import SignIn from './components/SignIn/SignIn';
 import './App.css';
 import apiKeys from './config/apiKeys';
 
@@ -27,7 +28,8 @@ class App extends Component {
   state = {
     input: '',
     imageUrl: '',
-    box: {}
+    box: {},
+    route: 'signin'
   }
 
   calculateFaceLocation = (data) => {
@@ -66,16 +68,21 @@ class App extends Component {
           params={{ polygon: {particlesOptions} }} 
         />
         <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm 
-          onInputChange={ this.onInputChange }
-          onSubmit={ this.onSubmit }
-        />
-        <FaceRecognition 
-          imageUrl={this.state.imageUrl}
-          box={this.state.box}
-        />
+        { this.state.route === 'signin' ? 
+          <SignIn /> :
+          <div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm 
+              onInputChange={ this.onInputChange }
+              onSubmit={ this.onSubmit }
+            />
+            <FaceRecognition 
+              imageUrl={this.state.imageUrl}
+              box={this.state.box}
+            />
+          </div>
+        }
       </div>
     );
   }
